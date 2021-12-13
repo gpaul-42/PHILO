@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:36 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/10 18:23:37 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/13 18:25:45 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@
 # include <sys/time.h>
 # include <stdlib.h>
 # include <string.h>
+
+# define MAX 2147483647
+# define MIN -2147483648
 
 
 
@@ -59,10 +62,11 @@ int				fork_give(t_info *tab);
 /*
 	PHILO LIFE
 */
-void			philo_sleep(t_philo *philo);
-void			philo_think(t_philo *philo);
-void			philo_take_forks(t_philo *philo);
-void			philo_eat(t_philo *philo);
+int				philo_sleep(t_philo *philo, int status);
+int				philo_think(t_philo *philo, int status);
+int				philo_take_forks(t_philo *philo, int status);
+int				philo_eat(t_philo *philo, int status);
+int				philo_drop_forks(t_philo *philo);
 void			*philo_life0(void *arg);
 void 			*philo_life1(void *arg);
 

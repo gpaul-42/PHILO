@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:51:34 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/10 18:06:39 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/13 18:30:33 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_info	*get_arg(int argc, char **argv)
 static int	parse_arg(t_info *tab)
 {
 	if (tab->nbr_philo <= 0)
-		return (free_error(tab, "philo <= 0"));
+		return (free_error(tab, "philo <= 0 or wrong params"));
 	if (tab->nbr_arg && tab->nbr_time_to_eat <= 0)
 		return (free_error(tab, "nbr of time to eat <= 0"));
 	if (tab->time_to_die <= 0)
