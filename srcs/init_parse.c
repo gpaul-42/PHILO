@@ -30,7 +30,7 @@ static t_info	*get_arg(int argc, char **argv)
 	return (tab);
 }
 
-static int		parse_arg(t_info *tab)
+static int	parse_arg(t_info *tab)
 {
 	if (tab->nbr_philo <= 0)
 		return (free_error(tab, "philo <= 0"));
@@ -43,12 +43,11 @@ static int		parse_arg(t_info *tab)
 	if (tab->time_to_sleep <= 0)
 		return (free_error(tab, "time to sleep <= 0"));
 	return (0);
-
 }
 
-t_info			*parse_get_arg(int argc, char **argv)
+t_info	*parse_get_arg(int argc, char **argv)
 {
-	t_info *tab;
+	t_info	*tab;
 
 	tab = get_arg(argc, argv);
 	if (tab == NULL)
@@ -59,21 +58,20 @@ t_info			*parse_get_arg(int argc, char **argv)
 	return (tab);
 }
 
-int			init_mutex(t_info *tab)
+int	init_mutex(t_info *tab)
 {
 	int	i;
 
 	if (check_malloc(&tab->philo, sizeof(t_philo) * tab->nbr_philo))
 		return (1);
 	i = 0;
+	if (check_malloc(&tab->forks, sizeof(pthread_mutex_t) * tab->nbr_philo))
+		return (1);
 	while (i < tab->nbr_philo)
 	{
 		tab->philo[i].id = i + 1;
-		 if (check_malloc(&tab->forks, sizeof(pthread_mutex_t) * tab->nbr_philo))
-		 	return (1);
 		if (pthread_mutex_init(&tab->forks[i], NULL))
 			return (1);
-
 		tab->philo[i].fork_l = &tab->forks[i];
 		tab->philo[i].tab = tab;
 		i++;

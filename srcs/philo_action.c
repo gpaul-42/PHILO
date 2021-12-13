@@ -25,24 +25,27 @@ void	philo_think(t_philo *philo)
 
 void	philo_take_forks(t_philo *philo)
 {
-	pthread_mutex_lock(philo->fork_l);
-	ft_print(philo, 0);
 	if (philo->id == philo->tab->nbr_philo)
 		pthread_mutex_lock(&philo->tab->forks[0]);
 	else
 		pthread_mutex_lock(&philo->tab->forks[philo->id]);
 	ft_print(philo, 0);
+	pthread_mutex_lock(philo->fork_l);
+	ft_print(philo, 0);
 }
 
 void	philo_eat(t_philo *philo)
 {
-	struct timeval time;
+	struct timeval	time;
 
 	gettimeofday(&time, NULL);
 	philo->last_eat = ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 	ft_print(philo, 1);
 	usleep(philo->tab->time_to_eat * 1000);
-	pthread_mutex_unlock(&philo->tab->forks[philo->id]);
+	if (philo->id == philo->tab->nbr_philo)
+		pthread_mutex_unlock(&philo->tab->forks[0]);
+	else
+		pthread_mutex_unlock(&philo->tab->forks[philo->id]);
 	pthread_mutex_unlock(philo->fork_l);
 	philo->nbr_eat++;
 }

@@ -12,7 +12,7 @@
 
 #include "../include/philo.h"
 
-int				ft_atoi(const char *str)
+int	ft_atoi(const char *str)
 {
 	int	i;
 	int	sign;
@@ -39,20 +39,20 @@ int				ft_atoi(const char *str)
 		return ((int)re);
 }
 
-int				check_malloc(void *dest, size_t size)
+int	check_malloc(void *dest, size_t size)
 {
-	*(void**)dest = malloc(size);
-	if (*(void**)dest == NULL)
+	*(void **) dest = malloc(size);
+	if (*(void **) dest == NULL)
 		return (1);
-	memset(*(void**)dest, 0, size);
+	memset(*(void **) dest, 0, size);
 	return (0);
 }
 
-void			ft_print(t_philo *philo, int option)
+void	ft_print(t_philo *philo, int option)
 {
-	unsigned int ms;
-	struct timeval time;
-	
+	unsigned int	ms;
+	struct timeval	time;
+
 	gettimeofday(&time, NULL);
 	ms = ((time.tv_sec * 1000) + (time.tv_usec / 1000)) - philo->time_crea;
 	if (option == 0)
@@ -69,7 +69,7 @@ void			ft_print(t_philo *philo, int option)
 
 unsigned int	time_to_ms(t_info *tab)
 {
-	unsigned int re;
+	unsigned int	re;
 
 	re = ((tab->time.tv_sec * 1000) + (tab->time.tv_usec / 1000));
 	return (re);

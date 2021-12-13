@@ -12,7 +12,7 @@
 
 #include "../include/philo.h"
 
-int		free_error(t_info *tab, char *str)
+int	free_error(t_info *tab, char *str)
 {
 	printf("Error : %s\n", str);
 	free(tab);

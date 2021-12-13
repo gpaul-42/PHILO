@@ -16,6 +16,7 @@ _SRCS =		main.c			\
 			utils.c			\
 			error_free.c	\
 			init_parse.c	\
+			philo_life.c	\
 			philo_action.c	\
 
 SRCS_DIR = srcs
@@ -28,10 +29,10 @@ INC = -I include/
 all : $(NAME)
 
 $(NAME) : $(SRCO)
-	gcc -o $(NAME) $(FLAG) $(SRCO)
+	clang -o $(NAME) $(FLAG) $(SRCO)
 
 %.o : %.c
-	gcc $(FLAG) -c $< -o $@ $(INC)
+	clang $(FLAG) -c $< -o $@ $(INC)
 
 clean :
 	rm -f $(SRCO)

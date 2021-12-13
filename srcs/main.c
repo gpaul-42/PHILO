@@ -14,36 +14,18 @@
 
 void	exit_free_philo(t_info *tab)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < tab->nbr_philo)
 	{
+		pthread_join(tab->philo[i].philo, NULL);
 		pthread_mutex_destroy(tab->philo[i].fork_l);
-		pthread_detach(tab->philo[i].philo);
 		i++;
 	}
 	free(tab->philo);
+	free(tab->forks);
 	free(tab);
-}
-
-void	*philo_life(void *arg)
-{
-	t_philo *philo;
-
-	philo = arg;
-	while (philo->tab->exit == 0)
-	{
-		if (philo->tab->exit == 0)
-			philo_take_forks(philo);
-		if (philo->tab->exit == 0)
-			philo_eat(philo);
-		if (philo->tab->exit == 0)
-			philo_sleep(philo);
-		if (philo->tab->exit == 0)
-			philo_think(philo);
-	}
-	return (0);
 }
 
 void	*checker(void *arg)
@@ -51,21 +33,19 @@ void	*checker(void *arg)
 	t_info	*tab;
 	int		i;
 	int		exit;
-	int		eaten;
 
 	tab = arg;
 	exit = 0;
-	while (exit == 0 && eaten != tab->nbr_philo)
+	while (exit == 0 && tab->eaten != tab->nbr_philo)
 	{
 		i = 0;
-		eaten = 0;
-		while (i < tab->nbr_philo && (exit == 0 && eaten != tab->nbr_philo))
+		while (i < tab->nbr_philo && (exit == 0
+				&& tab->eaten != tab->nbr_philo))
 		{
 			gettimeofday(&tab->time, NULL);
-			if ((time_to_ms(tab) - tab->philo[i].last_eat) > (unsigned int)tab->time_to_die)
+			if ((time_to_ms(tab) - tab->philo[i].last_eat)
+				> (unsigned int)tab->time_to_die)
 				exit = i;
-			else if (tab->nbr_arg == 1 && tab->philo[i].nbr_eat >= tab->nbr_time_to_eat)
-				eaten++;
 			i++;
 		}
 		usleep(250);
@@ -86,15 +66,20 @@ void	create_philo(t_info *tab)
 		gettimeofday(&tab->time, NULL);
 		tab->philo[i].time_crea = time_to_ms(tab);
 		tab->philo[i].last_eat = time_to_ms(tab);
-		pthread_create(&tab->philo[i].philo, NULL, philo_life, &tab->philo[i]);
+		if (tab->philo[i].id % 2 == 0)
+			pthread_create(&tab->philo[i].philo,
+				NULL, philo_life0, &tab->philo[i]);
+		else
+			pthread_create(&tab->philo[i].philo,
+				NULL, philo_life1, &tab->philo[i]);
 		i++;
 	}
 	pthread_create(&tab->checker, NULL, checker, tab);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-	t_info *tab;
+	t_info	*tab;
 
 	if (argc == 5 || argc == 6)
 	{

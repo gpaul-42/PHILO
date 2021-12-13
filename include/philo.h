@@ -46,6 +46,7 @@ typedef struct	s_info
 	int				nbr_time_to_eat;
 	int				nbr_arg;
 	int				exit;
+	int				eaten;
 }				t_info;
 
 /*
@@ -62,6 +63,8 @@ void			philo_sleep(t_philo *philo);
 void			philo_think(t_philo *philo);
 void			philo_take_forks(t_philo *philo);
 void			philo_eat(t_philo *philo);
+void			*philo_life0(void *arg);
+void 			*philo_life1(void *arg);
 
 
 /*
