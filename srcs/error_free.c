@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   error_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/06 18:48:46 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/06 18:58:36 by gpaul            ###   ########.fr       */
+/*   Created: 2021/12/09 16:04:31 by gpaul             #+#    #+#             */
+/*   Updated: 2021/12/09 16:36:11 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-void	ft_print(int philo, int option)
+int		free_error(t_info *tab, char *str)
 {
-	
-	
-	if (option == 0)
-		printf("%d %d has taken a fork", , philo)
+	printf("Error : %s\n", str);
+	free(tab);
+	return (1);
 }
