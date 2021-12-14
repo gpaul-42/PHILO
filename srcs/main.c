@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:02 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/13 18:34:51 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/14 15:39:55 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	exit_free_philo(t_info *tab)
 	i = 0;
 	while (i < tab->nbr_philo)
 	{
+		pthread_join(tab->philo[i].philo, NULL);
 		pthread_mutex_destroy(tab->philo[i].fork_l);
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:36 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/13 18:25:45 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/14 15:42:06 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@
 # define MAX 2147483647
 # define MIN -2147483648
 
-
-
-typedef struct	s_philo
+typedef struct s_philo
 {
 	struct s_info	*tab;
 	pthread_t		philo;
@@ -36,7 +34,7 @@ typedef struct	s_philo
 	int				nbr_eat;
 }				t_philo;
 
-typedef struct	s_info
+typedef struct s_info
 {
 	struct timeval	time;
 	t_philo			*philo;
@@ -68,8 +66,7 @@ int				philo_take_forks(t_philo *philo, int status);
 int				philo_eat(t_philo *philo, int status);
 int				philo_drop_forks(t_philo *philo);
 void			*philo_life0(void *arg);
-void 			*philo_life1(void *arg);
-
+void			*philo_life1(void *arg);
 
 /*
 	UTILS
