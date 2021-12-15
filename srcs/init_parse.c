@@ -78,3 +78,16 @@ int	init_mutex(t_info *tab)
 	}
 	return (0);
 }
+
+int	mutex_exit(t_info *tab)
+{
+	// if (check_malloc(&tab->lock_exit, sizeof(pthread_mutex_t)))
+	// 	return (1);
+	if (pthread_mutex_init(&tab->lock_exit, NULL))
+		return (1);
+	// if (check_malloc(&tab->lock_eaten, sizeof(pthread_mutex_t)))
+	// 	return (1);
+	if (pthread_mutex_init(&tab->lock_eaten, NULL))
+		return (1);
+	return (0);
+}

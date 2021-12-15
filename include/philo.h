@@ -28,10 +28,12 @@ typedef struct s_philo
 	struct s_info	*tab;
 	pthread_t		philo;
 	pthread_mutex_t	*fork_l;
+	pthread_mutex_t	lock_l_eat;
 	int				id;
 	unsigned int	time_crea;
 	unsigned int	last_eat;
 	int				nbr_eat;
+	int				h_fork;
 }				t_philo;
 
 typedef struct s_info
@@ -40,6 +42,8 @@ typedef struct s_info
 	t_philo			*philo;
 	pthread_t		checker;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	lock_exit;
+	pthread_mutex_t	lock_eaten;
 	int				nbr_philo;
 	int				time_to_die;
 	int				time_to_eat;
@@ -55,18 +59,28 @@ typedef struct s_info
 */
 t_info			*parse_get_arg(int argc, char **argv);
 int				init_mutex(t_info *tab);
+int				mutex_exit(t_info *tab);
 int				fork_give(t_info *tab);
 
 /*
 	PHILO LIFE
 */
-int				philo_sleep(t_philo *philo, int status);
-int				philo_think(t_philo *philo, int status);
-int				philo_take_forks(t_philo *philo, int status);
-int				philo_eat(t_philo *philo, int status);
+int				philo_sleep(t_philo *philo);
+int				philo_think(t_philo *philo);
+int				philo_take_forks(t_philo *philo);
+int				philo_eat(t_philo *philo);
 int				philo_drop_forks(t_philo *philo);
 void			*philo_life0(void *arg);
 void			*philo_life1(void *arg);
+
+/*
+	MUTEX LOCK/UNLOCK CHECK
+*/
+
+int				lock_unlock_exit(t_info *tab);
+int				lock_unlock_eaten(t_info *tab);
+unsigned int	lock_unlock_last_eat(t_philo *philo);
+
 
 /*
 	UTILS

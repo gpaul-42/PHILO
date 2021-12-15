@@ -14,6 +14,7 @@ NAME = philo
 
 _SRCS =		main.c			\
 			utils.c			\
+			utils2.c		\
 			error_free.c	\
 			init_parse.c	\
 			philo_life.c	\
@@ -23,7 +24,7 @@ SRCS_DIR = srcs
 SRCS = $(addprefix $(SRCS_DIR)/, $(_SRCS))
 SRCO = $(SRCS:.c=.o)
 
-FLAG = -Wall -Wextra -Werror -fsanitize=address -g
+FLAG = -Wall -Wextra -Werror -g -fsanitize=address
 INC = -I include/
 
 all : $(NAME)

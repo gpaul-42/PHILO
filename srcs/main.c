@@ -19,10 +19,18 @@ void	exit_free_philo(t_info *tab)
 	i = 0;
 	while (i < tab->nbr_philo)
 	{
+		printf("%d\n", i);
 		pthread_join(tab->philo[i].philo, NULL);
-		pthread_mutex_destroy(tab->philo[i].fork_l);
 		i++;
 	}
+	i = 0;
+	while (i < tab->nbr_philo)
+	{
+		pthread_mutex_destroy(tab->philo[i].fork_l);
+		pthread_mutex_destroy(&tab->philo[i].lock_l_eat);
+		i++;
+	}
+
 	free(tab->philo);
 	free(tab->forks);
 	free(tab);
@@ -36,21 +44,23 @@ void	*checker(void *arg)
 
 	tab = arg;
 	exit = 0;
-	while (exit == 0 && tab->eaten != tab->nbr_philo)
+	while (exit == 0 && lock_unlock_eaten(tab) != tab->nbr_philo)
 	{
 		i = 0;
 		while (i < tab->nbr_philo && (exit == 0
-				&& tab->eaten != tab->nbr_philo))
+				&& lock_unlock_eaten(tab) != tab->nbr_philo))
 		{
 			gettimeofday(&tab->time, NULL);
-			if ((time_to_ms(tab) - tab->philo[i].last_eat)
+			if ((time_to_ms(tab) - lock_unlock_last_eat(&tab->philo[i]))
 				> (unsigned int)tab->time_to_die)
 				exit = i;
 			i++;
 		}
 		usleep(250);
 	}
+	pthread_mutex_lock(&tab->lock_exit);
 	tab->exit = 1;
+	pthread_mutex_unlock(&tab->lock_exit);
 	if (exit >= 1)
 		ft_print(&tab->philo[exit], 4);
 	return (0);
@@ -87,6 +97,8 @@ int	main(int argc, char **argv)
 		if (tab == NULL)
 			return (1);
 		if (init_mutex(tab))
+			return (1);
+		if (mutex_exit(tab))
 			return (1);
 		create_philo(tab);
 		pthread_join(tab->checker, NULL);

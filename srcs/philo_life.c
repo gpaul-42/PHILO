@@ -15,19 +15,25 @@
 void	*philo_life0(void *arg)
 {
 	t_philo	*philo;
-	int		status;
+	int		exit;
 
-	status = 0;
+	exit = 0;
 	philo = arg;
-	while (status == 0)
+	while (exit == 0)
 	{
-		status = philo_take_forks(philo, status);
-		if (philo_eat(philo, status) == 0 && philo->tab->nbr_arg == 1
+		exit = lock_unlock_exit(philo->tab);
+		philo_take_forks(philo);
+		if (philo_eat(philo) == 0 && philo->tab->nbr_arg == 1
 			&& philo->nbr_eat == philo->tab->nbr_time_to_eat)
+		{
+			pthread_mutex_lock(&philo->tab->lock_eaten);
 			philo->tab->eaten++;
-		philo_drop_forks(philo);
-		status = philo_sleep(philo, status);
-		status = philo_think(philo, status);
+			pthread_mutex_unlock(&philo->tab->lock_eaten);
+		}
+		if (philo->h_fork == 1)
+			philo_drop_forks(philo);
+		philo_sleep(philo);
+		philo_think(philo);
 	}
 	return (0);
 }
@@ -35,19 +41,25 @@ void	*philo_life0(void *arg)
 void	*philo_life1(void *arg)
 {
 	t_philo	*philo;
-	int		status;
+	int		exit;
 
-	status = 0;
+	exit = 0;
 	philo = arg;
-	while (philo->tab->exit == 0)
+	while (exit == 0)
 	{
-		philo_sleep(philo, status);
-		philo_think(philo, status);
-		philo_take_forks(philo, status);
-		if (philo_eat(philo, status) == 0 && philo->tab->nbr_arg == 1
+		exit = lock_unlock_exit(philo->tab);
+		philo_sleep(philo);
+		philo_think(philo);
+		philo_take_forks(philo);
+		if (philo_eat(philo) == 0 && philo->tab->nbr_arg == 1
 			&& philo->nbr_eat == philo->tab->nbr_time_to_eat)
+		{
+			pthread_mutex_lock(&philo->tab->lock_eaten);
 			philo->tab->eaten++;
-		philo_drop_forks(philo);
+			pthread_mutex_unlock(&philo->tab->lock_eaten);
+		}
+		if (philo->h_fork == 1)
+			philo_drop_forks(philo);
 	}
 	return (0);
 }

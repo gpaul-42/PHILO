@@ -74,3 +74,13 @@ unsigned int	time_to_ms(t_info *tab)
 	re = ((tab->time.tv_sec * 1000) + (tab->time.tv_usec / 1000));
 	return (re);
 }
+
+int	lock_unlock_exit(t_info *tab)
+{
+	int	exit;
+
+	pthread_mutex_lock(&tab->lock_exit);
+		exit = tab->exit;
+	pthread_mutex_unlock(&tab->lock_exit);
+	return (exit);
+}
