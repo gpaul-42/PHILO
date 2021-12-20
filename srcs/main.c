@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:02 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/19 23:58:57 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/20 14:48:27 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	*checker(void *arg)
 	while (exit == 0 && lock_unlock_eaten(tab) != tab->nbr_philo)
 	{
 		exit = checker_2(tab);
-		usleep(50);
+		usleep(100);
 	}
 	pthread_mutex_lock(&tab->lock_exit);
 	tab->exit = 1;
