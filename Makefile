@@ -6,7 +6,7 @@
 #    By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/21 03:32:26 by gpaul             #+#    #+#              #
-#    Updated: 2021/12/14 15:44:42 by gpaul            ###   ########.fr        #
+#    Updated: 2021/12/19 23:52:07 by gpaul            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS_DIR = srcs
 SRCS = $(addprefix $(SRCS_DIR)/, $(_SRCS))
 SRCO = $(SRCS:.c=.o)
 
-FLAG = -Wall -Wextra -Werror -g -fsanitize=address
+FLAG = -Wall -Wextra -Werror #-g -fsanitize=thread
 INC = -I include/
 
 all : $(NAME)

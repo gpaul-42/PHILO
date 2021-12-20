@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:36 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/14 15:42:06 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/19 18:09:45 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void			*philo_life1(void *arg);
 
 int				lock_unlock_exit(t_info *tab);
 int				lock_unlock_eaten(t_info *tab);
+void			add_eaten(t_info *tab);
 unsigned int	lock_unlock_last_eat(t_philo *philo);
 
 

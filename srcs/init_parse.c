@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:51:34 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/13 18:30:33 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/19 18:24:31 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ t_info	*parse_get_arg(int argc, char **argv)
 	if (tab == NULL)
 		return (NULL);
 	tab->exit = 0;
+	tab->eaten = 0;
 	if (parse_arg(tab) == 1)
 		return (NULL);
 	return (tab);
@@ -81,12 +82,8 @@ int	init_mutex(t_info *tab)
 
 int	mutex_exit(t_info *tab)
 {
-	// if (check_malloc(&tab->lock_exit, sizeof(pthread_mutex_t)))
-	// 	return (1);
 	if (pthread_mutex_init(&tab->lock_exit, NULL))
 		return (1);
-	// if (check_malloc(&tab->lock_eaten, sizeof(pthread_mutex_t)))
-	// 	return (1);
 	if (pthread_mutex_init(&tab->lock_eaten, NULL))
 		return (1);
 	return (0);

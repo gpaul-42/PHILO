@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:02 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/14 15:39:55 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/19 23:58:57 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	exit_free_philo(t_info *tab)
 	i = 0;
 	while (i < tab->nbr_philo)
 	{
-		printf("%d\n", i);
 		pthread_join(tab->philo[i].philo, NULL);
 		i++;
 	}
@@ -30,33 +29,41 @@ void	exit_free_philo(t_info *tab)
 		pthread_mutex_destroy(&tab->philo[i].lock_l_eat);
 		i++;
 	}
-
 	free(tab->philo);
 	free(tab->forks);
 	free(tab);
 }
 
+static int	checker_2(t_info *tab)
+{
+	int	i;
+	int	exit;
+
+	exit = 0;
+	i = 0;
+	while (i < tab->nbr_philo && (exit == 0
+			&& lock_unlock_eaten(tab) != tab->nbr_philo))
+	{
+		gettimeofday(&tab->time, NULL);
+		if ((time_to_ms(tab) - lock_unlock_last_eat(&tab->philo[i]))
+			> (unsigned int)tab->time_to_die)
+			exit = i;
+		i++;
+	}
+	return (exit);
+}
+
 void	*checker(void *arg)
 {
 	t_info	*tab;
-	int		i;
 	int		exit;
 
 	tab = arg;
 	exit = 0;
 	while (exit == 0 && lock_unlock_eaten(tab) != tab->nbr_philo)
 	{
-		i = 0;
-		while (i < tab->nbr_philo && (exit == 0
-				&& lock_unlock_eaten(tab) != tab->nbr_philo))
-		{
-			gettimeofday(&tab->time, NULL);
-			if ((time_to_ms(tab) - lock_unlock_last_eat(&tab->philo[i]))
-				> (unsigned int)tab->time_to_die)
-				exit = i;
-			i++;
-		}
-		usleep(250);
+		exit = checker_2(tab);
+		usleep(50);
 	}
 	pthread_mutex_lock(&tab->lock_exit);
 	tab->exit = 1;
