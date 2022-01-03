@@ -6,17 +6,17 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 18:38:57 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/19 16:20:50 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/20 16:21:13 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	ft_atoi(const char *str)
+unsigned int	ft_atoi(const char *str)
 {
-	int	i;
-	int	sign;
-	int	re;
+	int				i;
+	int				sign;
+	unsigned int	re;
 
 	re = 0;
 	i = 0;
@@ -34,9 +34,9 @@ int	ft_atoi(const char *str)
 		re = re * 10 + (str[i++] - '0');
 	}
 	if (sign == 1)
-		return ((int) -re);
+		return (-re);
 	else
-		return ((int)re);
+		return (re);
 }
 
 int	check_malloc(void *dest, size_t size)
@@ -80,7 +80,7 @@ int	lock_unlock_exit(t_info *tab)
 	int	exit;
 
 	pthread_mutex_lock(&tab->lock_exit);
-		exit = tab->exit;
+	exit = tab->exit;
 	pthread_mutex_unlock(&tab->lock_exit);
 	return (exit);
 }

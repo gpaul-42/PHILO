@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 15:51:34 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/19 18:24:31 by gpaul            ###   ########.fr       */
+/*   Updated: 2021/12/20 16:20:25 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,19 @@ static t_info	*get_arg(int argc, char **argv)
 
 	if (check_malloc(&tab, sizeof(t_info) * 1))
 		return (NULL);
-	tab->nbr_philo = ft_atoi(argv[1]);
-	tab->time_to_die = ft_atoi(argv[2]);
-	tab->time_to_eat = ft_atoi(argv[3]);
-	tab->time_to_sleep = ft_atoi(argv[4]);
+	init_var(tab);
+	if (check_arg(argv[1]) == 0 && ft_atoi(argv[1]) <= MAX)
+		tab->nbr_philo = (int)ft_atoi(argv[1]);
+	if (check_arg(argv[2]) == 0 && ft_atoi(argv[2]) <= MAX)
+		tab->time_to_die = (int)ft_atoi(argv[2]);
+	if (check_arg(argv[3]) == 0 && ft_atoi(argv[3]) <= MAX)
+		tab->time_to_eat = (int)ft_atoi(argv[3]);
+	if (check_arg(argv[4]) == 0 && ft_atoi(argv[4]) <= MAX)
+		tab->time_to_sleep = (int)ft_atoi(argv[4]);
 	if (argc == 6)
 	{
-		tab->nbr_time_to_eat = ft_atoi(argv[5]);
+		if (check_arg(argv[5]) == 0 && ft_atoi(argv[5]) <= MAX)
+			tab->nbr_time_to_eat = (int)ft_atoi(argv[5]);
 		tab->nbr_arg = 1;
 	}
 	return (tab);
@@ -32,16 +38,16 @@ static t_info	*get_arg(int argc, char **argv)
 
 static int	parse_arg(t_info *tab)
 {
-	if (tab->nbr_philo <= 0)
-		return (free_error(tab, "philo <= 0 or wrong params"));
+	if (tab->nbr_philo <= 0 && tab->nbr_philo < MAX)
+		return (free_error(tab, "philo"));
 	if (tab->nbr_arg && tab->nbr_time_to_eat <= 0)
-		return (free_error(tab, "nbr of time to eat <= 0"));
+		return (free_error(tab, "nbr of time to eat"));
 	if (tab->time_to_die <= 0)
-		return (free_error(tab, "time to die <= 0"));
+		return (free_error(tab, "time to die"));
 	if (tab->time_to_eat <= 0)
-		return (free_error(tab, "time to eat <= 0"));
+		return (free_error(tab, "time to eat"));
 	if (tab->time_to_sleep <= 0)
-		return (free_error(tab, "time to sleep <= 0"));
+		return (free_error(tab, "time to sleep"));
 	return (0);
 }
 

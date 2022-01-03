@@ -6,7 +6,11 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:36 by gpaul             #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/01/03 15:44:10 by gpaul            ###   ########.fr       */
+=======
+/*   Updated: 2021/12/20 16:20:57 by gpaul            ###   ########.fr       */
+>>>>>>> 2b6b0fab82a3aa5872c323ba83fd79505011926c
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +62,7 @@ typedef struct s_info
 	INIT/PARSE
 */
 t_info			*parse_get_arg(int argc, char **argv);
+void			init_var(t_info *tab);
 int				init_mutex(t_info *tab);
 int				mutex_exit(t_info *tab);
 int				fork_give(t_info *tab);
@@ -85,10 +90,11 @@ unsigned int	lock_unlock_last_eat(t_philo *philo);
 /*
 	UTILS
 */
-int				ft_atoi(const char *str);
+unsigned int	ft_atoi(const char *str);
 int				free_error(t_info *tab, char *str);
 int				check_malloc(void *dest, size_t size);
 void			ft_print(t_philo *philo, int option);
 unsigned int	time_to_ms(t_info *tab);
+int				check_arg(char *argv);
 
 #endif
