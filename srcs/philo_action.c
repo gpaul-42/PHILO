@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/09 19:33:32 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/20 15:31:54 by gpaul            ###   ########.fr       */
+/*   Updated: 2022/01/07 23:05:29 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ int	philo_sleep(t_philo *philo)
 {
 	if (lock_unlock_exit(philo->tab) == 0)
 	{
+		ft_print(philo, 2);
 		usleep(philo->tab->time_to_sleep * 1000);
 		if (lock_unlock_exit(philo->tab) == 0)
-		{
-			ft_print(philo, 2);
 			return (0);
-		}
 		else
 			return (1);
 	}
@@ -52,6 +50,8 @@ int	philo_take_forks(t_philo *philo)
 			pthread_mutex_lock(&philo->tab->forks[philo->id]);
 		if (lock_unlock_exit(philo->tab) == 0)
 			ft_print(philo, 0);
+		if (philo->tab->nbr_philo == 1)
+			return (one_philo(philo));
 		pthread_mutex_lock(philo->fork_l);
 		if (lock_unlock_exit(philo->tab) == 0)
 			ft_print(philo, 0);
@@ -91,7 +91,8 @@ int	philo_drop_forks(t_philo *philo)
 		pthread_mutex_unlock(&philo->tab->forks[0]);
 	else
 		pthread_mutex_unlock(&philo->tab->forks[philo->id]);
-	pthread_mutex_unlock(philo->fork_l);
+	if (philo->tab->nbr_philo > 1)
+		pthread_mutex_unlock(philo->fork_l);
 	philo->h_fork = 0;
 	return (0);
 }

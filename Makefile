@@ -6,7 +6,7 @@
 #    By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/08/21 03:32:26 by gpaul             #+#    #+#              #
-#    Updated: 2022/01/03 19:28:00 by gpaul            ###   ########.fr        #
+#    Updated: 2022/01/07 23:06:58 by gpaul            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,13 @@ _SRCS =		main.c			\
 			init_parse.c	\
 			philo_life.c	\
 			philo_action.c	\
+			philo_special.c	\
 
 SRCS_DIR = srcs
 SRCS = $(addprefix $(SRCS_DIR)/, $(_SRCS))
 SRCO = $(SRCS:.c=.o)
 
-FLAG = -Wall -Wextra -Werror -g -fsanitize=address
+FLAG = -Wall -Wextra -Werror #-g -fsanitize=address
 INC = -I include/
 
 all : $(NAME)

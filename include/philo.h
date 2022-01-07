@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:36 by gpaul             #+#    #+#             */
-/*   Updated: 2022/01/03 19:27:58 by gpaul            ###   ########.fr       */
+/*   Updated: 2022/01/07 23:05:51 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int				philo_eat(t_philo *philo);
 int				philo_drop_forks(t_philo *philo);
 void			*philo_life0(void *arg);
 void			*philo_life1(void *arg);
+int				one_philo(t_philo *philo);
 
 /*
 	MUTEX LOCK/UNLOCK CHECK

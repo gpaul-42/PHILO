@@ -6,7 +6,7 @@
 /*   By: gpaul <gpaul@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 17:10:02 by gpaul             #+#    #+#             */
-/*   Updated: 2021/12/20 14:48:27 by gpaul            ###   ########.fr       */
+/*   Updated: 2022/01/07 23:17:40 by gpaul            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,9 @@ static int	checker_2(t_info *tab)
 	int	i;
 	int	exit;
 
-	exit = 0;
+	exit = -1;
 	i = 0;
-	while (i < tab->nbr_philo && (exit == 0
+	while (i < tab->nbr_philo && (exit == -1
 			&& lock_unlock_eaten(tab) != tab->nbr_philo))
 	{
 		gettimeofday(&tab->time, NULL);
@@ -59,8 +59,8 @@ void	*checker(void *arg)
 	int		exit;
 
 	tab = arg;
-	exit = 0;
-	while (exit == 0 && lock_unlock_eaten(tab) != tab->nbr_philo)
+	exit = -1;
+	while (exit == -1 && lock_unlock_eaten(tab) != tab->nbr_philo)
 	{
 		exit = checker_2(tab);
 		usleep(100);
@@ -68,7 +68,7 @@ void	*checker(void *arg)
 	pthread_mutex_lock(&tab->lock_exit);
 	tab->exit = 1;
 	pthread_mutex_unlock(&tab->lock_exit);
-	if (exit >= 1)
+	if (exit >= 0)
 		ft_print(&tab->philo[exit], 4);
 	return (0);
 }
